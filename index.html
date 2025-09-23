@@ -6,7 +6,7 @@
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="Purposa — Chase Your Dreams">
   <meta property="og:description" content="Turn your dreams into reality with Purposa. Download now and start your journey!">
-  <meta property="og:image" content="https://yourdomain.com/preview-image.png">
+  <meta property="og:image" content="https://https://i.pinimg.com/736x/6d/9f/6b/6d9f6b94ee7a3d3aee5f0092d968d679.jpg">
   <meta property="og:url" content="https://yourdomain.com/">
   <meta property="og:type" content="website">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,6 +21,11 @@
       var iosUrl = "https://apps.apple.com/app/purposa-chase-your-dreams/id6748883803";
       var androidUrl = "https://play.google.com/store/apps/details?id=app.purposa";
       var desktopUrl = iosUrl;
+
+      // Detect browser language
+      var userLang = navigator.language || navigator.userLanguage;
+      console.log("User Language:", userLang);
+
       if (ios) {
         window.location.replace(iosUrl);
       } else if (android) {
