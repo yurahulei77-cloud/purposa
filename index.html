@@ -10,6 +10,14 @@
   <meta property="og:url" content="https://yourdomain.com/">
   <meta property="og:type" content="website">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6G98FWN0D"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-P6G98FWN0D');
+  </script>
   <style>
     html, body { background: #fff; height: 100%; margin: 0; }
   </style>
@@ -22,7 +30,7 @@
       var androidUrl = "https://play.google.com/store/apps/details?id=app.purposa";
       var desktopUrl = iosUrl;
 
-      // Detect browser language
+      // Detect browser language (will be visible in GA4 as "language" dimension)
       var userLang = navigator.language || navigator.userLanguage;
       console.log("User Language:", userLang);
 
