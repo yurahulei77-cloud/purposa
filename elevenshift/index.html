@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Download — Elevenshift</title>
+
+  <!-- Google tag (gtag.js) — taken from your main index -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6G98FWN0D"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // keep send_page_view so GA records pageviews for this path (/elevenshift)
+    gtag('config', 'G-P6G98FWN0D', { 'send_page_view': true });
+  </script>
+
+  <style>
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    body{display:flex;align-items:center;justify-content:center;background:#f6f7fb}
+    .card{width:100%;max-width:720px;padding:28px;border-radius:12px;background:#fff;box-shadow:0 6px 22px rgba(20,20,50,.06);text-align:center}
+    h1{margin:0 0 6px;font-size:20px}
+    p{color:#556;margin:0 0 18px}
+    .buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .btn{padding:12px 18px;border-radius:10px;text-decoration:none;color:#fff;font-weight:600}
+    .android{background:#3ddc84}
+    .ios{background:#0070c9}
+    .note{margin-top:12px;color:#889;font-size:13px}
+  </style>
+</head>
+<body>
+  <main class="card" role="main" aria-live="polite">
+    <h1 id="title">Opening Elevenshift…</h1>
+    <p id="desc">We'll forward you to the right app store. If nothing happens, choose your store below.</p>
+
+    <div class="buttons">
+      <a id="androidBtn" class="btn android" href="#" target="_blank" rel="noopener">Open on Google Play</a>
+      <a id="iosBtn" class="btn ios" href="#" target="_blank" rel="noopener">Open on App Store</a>
+    </div>
+
+    <div class="note" id="note">Redirecting…</div>
+  </main>
+
+  <script>
+    // Links taken from your main index.html
+    const ANDROID_URL = "https://play.google.com/store/apps/details?id=app.purposa";
+    const IOS_URL = "https://apps.apple.com/app/purposa-chase-your-dreams/id6748883803";
+    const CAMPAIGN = "elevenshift"; // change this filename if you create others
+
+    // Wire fallback buttons
+    document.getElementById('androidBtn').href = ANDROID_URL;
+    document.getElementById('iosBtn').href = IOS_URL;
+
+    // Send GA4 event for easier reporting
+    function sendCampaignEvent() {
+      if (window.gtag) {
+        gtag('event', 'campaign_view', {
+          campaign_name: CAMPAIGN,
+          page_location: location.href,
+          page_path: location.pathname
+        });
+      } else {
+        console.log('gtag not ready - campaign_view', CAMPAIGN);
+      }
+    }
+
+    // Detect platform and redirect after a short delay so GA has time to send
+    function detectAndRedirect() {
+      const ua = navigator.userAgent || navigator.vendor || '';
+      const isAndroid = /Android/i.test(ua);
+      const isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+      sendCampaignEvent();
+
+      // If mobile, redirect to the store after ~700ms
+      if (isAndroid || isIOS) {
+        const target = isAndroid ? ANDROID_URL : IOS_URL;
+        // Small countdown text for UX
+        let remaining = 1; // seconds
+        const noteEl = document.getElementById('note');
+        noteEl.textContent = `Redirecting to the store in ${remaining + 1}s…`;
+
+        setTimeout(() => {
+          // final quick update
+          noteEl.textContent = 'Redirecting now…';
+          // navigate
+          location.href = target;
+        }, 700);
+      } else {
+        // Desktop: do not auto-redirect
+        document.getElementById('note').textContent = 'Click the store button to continue.';
+      }
+    }
+
+    window.addEventListener('load', detectAndRedirect);
+  </script>
+</body>
+</html>
